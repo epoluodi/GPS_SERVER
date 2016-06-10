@@ -16,37 +16,35 @@
         />
 
 
-    <Button
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/config"
-        android:text="设置信息"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
 
-
-
-
-        />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="注册使用人："
         android:id="@+id/textuser"
-        android:layout_below="@+id/config"
+        android:layout_centerInParent="true"
+
+        android:layout_marginTop="10dp"
+        android:textSize="20dp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="设备ID："
+        android:id="@+id/txtdeviceid"
+        android:layout_below="@+id/textuser"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:textSize="20dp"
         />
-
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="当前位置："
         android:gravity="center_horizontal"
         android:id="@+id/textlocation"
-        android:layout_below="@+id/textuser"
+        android:layout_below="@+id/txtdeviceid"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:textSize="20dp"
@@ -56,11 +54,22 @@
     <Button
         android:layout_width="150dp"
         android:layout_height="wrap_content"
+        android:id="@+id/config"
+        android:text="设置信息"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/textlocation"
+
+        />
+
+
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
         android:id="@+id/sendself"
-        android:text="发送当前位置"
+        android:text="更新APP"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:layout_below="@+id/textlocation"
+        android:layout_below="@+id/config"
         android:layout_marginTop="10dp"
 
 
@@ -71,7 +80,7 @@
     <TextView
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:text="V 1.0"
+    android:text="V 2.0"
     android:layout_centerHorizontal="true"
     android:layout_alignParentBottom="true"
     android:layout_marginBottom="20dp"

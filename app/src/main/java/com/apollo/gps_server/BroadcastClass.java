@@ -18,14 +18,7 @@ public class BroadcastClass extends BroadcastReceiver{
         Toast.makeText(context,"GPS服务启动",Toast.LENGTH_SHORT).show();
 
             Intent intent1 = new Intent(context,GPS_SERVER.class);
-            Bundle bundle = new Bundle();
-
             context.startService(intent1);
-
-
-
             Log.i("服务" ,"启动");
-
-
     }
 }

@@ -55,40 +55,6 @@ public class DBManager {
     }
 
 
-    public String getusername()
-    {
-        String user="";
-        try {
-            Cursor cursor = db.rawQuery("select name from config ", null);
-            if (cursor.moveToNext()) {
-                user = cursor.getString(0);
-            }
-            cursor.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return user;
-    }
-
-
-    public void updateusername(String username)
-    {
-
-        try {
-            ContentValues cv = new ContentValues();
-            cv.put("name",username);
-            db.update("config",cv,""
-                    ,null);
-
-
-
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return;
-    }
-
     public static String GetSysDate() {
         SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String date = sDateFormat.format(new java.util.Date());

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    tools:context="com.apollo.gps_server.MapActivity">
+
+    <com.baidu.mapapi.map.MapView
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true" />
+
+    <LinearLayout
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/setting_back"
+        android:clickable="true"
+        android:orientation="vertical"
+        android:padding="5dp">
+
+        <ImageView
+            android:id="@+id/btnsetting"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_margin="5dp"
+            android:background="@drawable/setting_selector"
+            android:clickable="true" />
+
+        <ImageView
+            android:id="@+id/btnloc"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_margin="5dp"
+            android:background="@drawable/loc_selector"
+            android:clickable="true"
+            android:focusable="true" />
+    </LinearLayout>
+
+    <LinearLayout
+
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/setting_back"
+        android:clickable="true"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <ImageView
+            android:id="@+id/btnsendloc"
+            android:clickable="true"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:background="@drawable/btnsendloc_selector"
+            android:padding="5dp" />
+
+        <ImageView
+            android:id="@+id/btnrefreshc"
+            android:clickable="true"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/btnrefresh_c_selector"
+
+            android:padding="5dp" />
+    </LinearLayout>
+
+
+    <LinearLayout
+
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/setting_back"
+        android:clickable="true"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <ImageView
+            android:id="@+id/state"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:background="@drawable/ygreen"
+            android:padding="5dp" />
+
+        <TextView
+            android:id="@+id/statetxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="已连接"
+            android:textColor="@color/white"
+
+            />
+
+    </LinearLayout>
+
+
+</RelativeLayout>

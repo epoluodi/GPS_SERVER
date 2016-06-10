@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.apollo.gps_server" >
+    package="com.apollo.gps_server">
+
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -9,10 +10,9 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-
-
     <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
-
+    <uses-permission android:name="android.permission.install_packages" />
+    <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" />
     <!-- 用于读取手机当前的状态 -->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <!-- 写入扩展存储，向扩展卡写入数据，用于写入离线定位数据 -->
@@ -21,34 +21,48 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.GET_TASKS" />
 
-
     <application
+        android:name=".WebService.APP"
         android:allowBackup="true"
         android:icon="@drawable/gps"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="KiRNx2llYb0NcFfLxYVkdu4o9GhuKBXn" />
-        <service
-            android:name="com.apollo.gps_server.GPS_SERVER"
-            android:enabled="true"
-            android:icon="@drawable/gps"
-            android:exported="true"/>
 
-        <receiver
-            android:name="com.apollo.gps_server.BroadcastClass"
-            >
+        <service
+            android:name=".GPS_SERVER"
+            android:enabled="true"
+            android:exported="true"
+            android:icon="@drawable/gps" />
+        <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote">
+            <intent-filter>
+                <action android:name="com.baidu.location.service_v2.2"></action>
+            </intent-filter>
+        </service>
+
+        <receiver android:name=".BroadcastClass">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </receiver>
 
         <activity
-            android:name="com.apollo.gps_server.GPSAPP"
-            android:label="@string/title_activity_gpsapp"
-            android:icon="@drawable/gps">
+            android:name=".GPSAPP"
+            android:icon="@drawable/gps"
+            android:label="@string/title_activity_gpsapp">
+
+
+        </activity>
+        <activity android:name=".MapActivity"
+            android:theme="@android:style/Theme.Holo.NoActionBar"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
