@@ -40,12 +40,12 @@ import java.util.logging.Handler;
  */
 public class GPS_SERVER extends Service {
 
-    private final int ScanSpan = 1000 * 5;
+    private final int ScanSpan = 1000 * 30;
     private final IBinder binder = new MyBinder();
     DBManager dbManager = null;
     private String username = "", deviceid;
 
-
+    private GPS_SERVER gps_server;
     private Boolean lastupdatestate = true;
     private IGPSCallBack igpsCallBack;
     private BDLocation bdLocation;
@@ -306,11 +306,13 @@ public class GPS_SERVER extends Service {
             switch (msg.what) {
                 case 1:
                     lastupdatestate = true;
-                    igpsCallBack.OnUpdateState(true);
+                    if (igpsCallBack !=null)
+                        igpsCallBack.OnUpdateState(true);
                     break;
                 case -1:
                     lastupdatestate = false;
-                    igpsCallBack.OnUpdateState(false);
+                    if (igpsCallBack !=null)
+                        igpsCallBack.OnUpdateState(false);
                     break;
             }
         }

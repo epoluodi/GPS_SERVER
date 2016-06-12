@@ -50,8 +50,8 @@ public class MapActivity extends Activity {
     private ImageView btnloc, btnsetting, btnsendloc, btnrefreshc, btnstate;
     private Boolean isfristrun = true;
     private TextView statetxt;
-    private BitmapDescriptor bitmapDescriptor;
-    private JSONArray jsonArray;
+    private BitmapDescriptor bitmapDescriptor, bitmapDescriptor2;
+    private JSONArray jsonArray1, jsonArray2;
 
 
     @Override
@@ -76,7 +76,8 @@ public class MapActivity extends Activity {
 
         bitmapDescriptor = BitmapDescriptorFactory
                 .fromResource(R.drawable.c);
-
+        bitmapDescriptor2 = BitmapDescriptorFactory
+                .fromResource(R.drawable.p);
 
         Intent intent = new Intent(this, GPS_SERVER.class);
         startService(intent);
@@ -107,11 +108,21 @@ public class MapActivity extends Activity {
             button.setBackgroundResource(R.drawable.popup);
             InfoWindow.OnInfoWindowClickListener listener = null;
             button.setTextColor(getResources().getColor(R.color.black));
-            int i = marker.getZIndex();
+            JSONObject jsonObject ;
+            int i = marker.getExtraInfo().getInt("index");
             try {
-                JSONObject jsonObject = jsonArray.getJSONObject(i);
-                button.setText("[" + jsonObject.getString("cid") + "]" +
-                        jsonObject.getString("name"));
+
+
+                if (marker.getExtraInfo().getInt("model") == 0) {
+                    jsonObject = jsonArray1.getJSONObject(i);
+                    button.setText("[" + jsonObject.getString("cid") + "]" +
+                            jsonObject.getString("name"));
+                }
+                else
+                {
+                    jsonObject = jsonArray2.getJSONObject(i);
+                    button.setText(jsonObject.getString("name"));
+                }
                 listener = new InfoWindow.OnInfoWindowClickListener() {
                     public void onInfoWindowClick() {
                         baiduMap.hideInfoWindow();
@@ -120,9 +131,10 @@ public class MapActivity extends Activity {
                 LatLng ll = marker.getPosition();
                 InfoWindow mInfoWindow = new InfoWindow(BitmapDescriptorFactory.fromView(button), ll, -47, listener);
                 baiduMap.showInfoWindow(mInfoWindow);
+
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            catch (Exception e)
-            {e.printStackTrace();}
 
 
             return true;
@@ -148,6 +160,7 @@ public class MapActivity extends Activity {
         unbindService(serviceConnection);
         baiduMap.setMyLocationEnabled(false);
         bitmapDescriptor.recycle();
+        bitmapDescriptor2.recycle();
         mapView.onDestroy();
     }
 
@@ -155,13 +168,16 @@ public class MapActivity extends Activity {
     View.OnClickListener onClickListenerloc = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            BDLocation bdLocation = gps_server.getLocation();
-            LatLng ll = new LatLng(bdLocation.getLatitude(),
-                    bdLocation.getLongitude());
-            MapStatus.Builder builder = new MapStatus.Builder();
-            builder.target(ll).zoom(17.0f);
-            baiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
-
+            try {
+                BDLocation bdLocation = gps_server.getLocation();
+                LatLng ll = new LatLng(bdLocation.getLatitude(),
+                        bdLocation.getLongitude());
+                MapStatus.Builder builder = new MapStatus.Builder();
+                builder.target(ll).zoom(17.0f);
+                baiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
+            }
+            catch (Exception e)
+            {e.printStackTrace();}
 
         }
     };
@@ -251,6 +267,7 @@ public class MapActivity extends Activity {
                 Message message = handler.obtainMessage();
                 message.what = 0;
                 message.obj = r;
+
                 handler.sendMessage(message);
             }
         }
@@ -264,20 +281,52 @@ public class MapActivity extends Activity {
                 case 0:
 
                     try {
-                        jsonArray = new JSONArray(msg.obj.toString());
+
+
+                        JSONObject jsonObjectmain = new JSONObject(msg.obj.toString());
+
+                        jsonArray1 = jsonObjectmain.getJSONArray("c");
                         JSONObject jsonObject;
                         baiduMap.clear();
-                        Marker marker;
-                        for (int i = 0; i < jsonArray.length(); i++) {
+                        Bundle bundle ;
 
-                            jsonObject = jsonArray.getJSONObject(i);
+
+                        for (int i = 0; i < jsonArray1.length(); i++) {
+
+                            jsonObject = jsonArray1.getJSONObject(i);
                             LatLng latLng = new LatLng(Float.valueOf(jsonObject.getString("lat")),
                                     Float.valueOf(jsonObject.getString("lng")));
                             MarkerOptions markerOptions = new MarkerOptions().position(latLng).
                                     icon(bitmapDescriptor)
-                                    .zIndex(i).draggable(false).title(jsonObject.getString("name"));
+                                    .draggable(false).title(jsonObject.getString("cid"));
+                            bundle = new Bundle();
+                            bundle.putInt("model", 0);
+                            bundle.putInt("index",i);
+                            markerOptions.extraInfo(bundle);
                             markerOptions.animateType(MarkerOptions.MarkerAnimateType.drop);
-                            marker = (Marker) (baiduMap.addOverlay(markerOptions));
+                            baiduMap.addOverlay(markerOptions);
+
+
+                        }
+
+                        jsonArray2 = jsonObjectmain.getJSONArray("p");
+                        for (int i = 0; i  < jsonArray2.length() ; i++) {
+
+
+                            jsonObject = jsonArray2.getJSONObject(i);
+                            if (gps_server.getUsername().equals(jsonObject.getString("name")))
+                                continue;
+                            LatLng latLng = new LatLng(Float.valueOf(jsonObject.getString("lat")),
+                                    Float.valueOf(jsonObject.getString("lng")));
+                            MarkerOptions markerOptions = new MarkerOptions().position(latLng).
+                                    icon(bitmapDescriptor2)
+                                    .draggable(false).title(jsonObject.getString("name"));
+                            bundle = new Bundle();
+                            bundle.putInt("model", 1);
+                            bundle.putInt("index",i);
+                            markerOptions.extraInfo(bundle);
+                            markerOptions.animateType(MarkerOptions.MarkerAnimateType.drop);
+                            baiduMap.addOverlay(markerOptions);
 
 
                         }

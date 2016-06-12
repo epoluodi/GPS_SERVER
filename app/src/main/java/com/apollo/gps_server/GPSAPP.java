@@ -293,8 +293,10 @@ public class GPSAPP extends Activity {
                             else
                             {
                                 gps_server.updateusername(input);
-                                Toast.makeText(getApplicationContext(), "设置完成！" + input, Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), "设置完成！重新启动" + input, Toast.LENGTH_LONG).show();
                                 textViewusername.setText("注册使用人：" +gps_server.getUsername());
+                                System.exit(0);
+
                             }
 
                         }
