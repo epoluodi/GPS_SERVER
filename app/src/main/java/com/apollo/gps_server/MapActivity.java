@@ -174,6 +174,12 @@ public class MapActivity extends Activity {
                         bdLocation.getLongitude());
                 MapStatus.Builder builder = new MapStatus.Builder();
                 builder.target(ll).zoom(17.0f);
+                MyLocationData locData = new MyLocationData.Builder()
+                        .accuracy(bdLocation.getRadius())
+                        // 此处设置开发者获取到的方向信息，顺时针0-360
+                        .direction(bdLocation.getDirection()).latitude(bdLocation.getLatitude())
+                        .longitude(bdLocation.getLongitude()).build();
+                baiduMap.setMyLocationData(locData);
                 baiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
             }
             catch (Exception e)
