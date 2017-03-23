@@ -57,6 +57,7 @@ public class MapActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_map);
         mapView = (MapView) findViewById(R.id.map);
         mapView.showZoomControls(false);
@@ -265,7 +266,7 @@ public class MapActivity extends Activity {
     Runnable runnable = new Runnable() {
         @Override
         public void run() {
-            Webservice webservice = new Webservice("Http://218.91.156.62:9229/", 10000);
+            Webservice webservice = new Webservice("Http://vc1818.88ip.org:9229/", 10000);
             String r = webservice.PDA_GetInterFaceForStringNew(null, "A_PDA_getGPSList");
             if (r.equals("-1"))
                 handler.sendEmptyMessage(1);

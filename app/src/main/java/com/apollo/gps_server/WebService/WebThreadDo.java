@@ -99,7 +99,7 @@ public class WebThreadDo {
         public void run() {
             Looper.prepare();
             Message message = Message.obtain();
-            webservice = new Webservice("Http://218.91.156.62:9229/",15000);
+            webservice = new Webservice("Http://vc1818.88ip.org:9229/",15000);
 
             switch (calltype) {
                 case 0:

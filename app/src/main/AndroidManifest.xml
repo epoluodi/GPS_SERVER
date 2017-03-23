@@ -30,20 +30,13 @@
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="KiRNx2llYb0NcFfLxYVkdu4o9GhuKBXn" />
-
+        <service android:name="com.baidu.location.f" android:enabled="true" android:process=":remote"/>
         <service
             android:name=".GPS_SERVER"
             android:enabled="true"
             android:exported="true"
             android:icon="@drawable/gps" />
-        <service
-            android:name="com.baidu.location.f"
-            android:enabled="true"
-            android:process=":remote">
-            <intent-filter>
-                <action android:name="com.baidu.location.service_v2.2"></action>
-            </intent-filter>
-        </service>
+
 
         <receiver android:name=".BroadcastClass">
             <intent-filter>

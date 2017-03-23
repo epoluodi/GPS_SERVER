@@ -40,7 +40,7 @@ import java.util.logging.Handler;
  */
 public class GPS_SERVER extends Service {
 
-    private final int ScanSpan = 1000 * 30;
+    private final int ScanSpan = 1000 * 10;
     private final IBinder binder = new MyBinder();
     DBManager dbManager = null;
     private String username = "", deviceid;
@@ -261,7 +261,7 @@ public class GPS_SERVER extends Service {
         try {
             Webservice webservice;
 //                    NT1269.88IP.ORG
-            webservice = new Webservice("Http://218.91.156.62:9229/", 10000);
+            webservice = new Webservice("Http://vc1818.88ip.org:9229/", 10000);
             String r = webservice.PDA_GetInterFaceForStringNew(null, "A_CheckNet");
             Log.i("网络检查", "R:" + r);
 
@@ -285,7 +285,7 @@ public class GPS_SERVER extends Service {
                 propertyInfo2.setName("deviceid");
                 propertyInfo2.setValue(APP.getAPP().androidId);
                 propertyInfos2[3] = propertyInfo2;
-                webservice = new Webservice("Http://218.91.156.62:9229/", 15000);
+                webservice = new Webservice("Http://vc1818.88ip.org:9229/", 15000);
                 r = webservice.PDA_GetInterFaceForStringNew(propertyInfos2, "PDA_submitgpsNew");
                 if (r.equals("1"))
                     handler.sendEmptyMessage(1);
@@ -364,6 +364,11 @@ public class GPS_SERVER extends Service {
 //                    locHander.sendMessage(locMsg);
 //                }
             }
+
+        }
+
+        @Override
+        public void onConnectHotSpotMessage(String s, int i) {
 
         }
     };
