@@ -42,7 +42,7 @@ public class GPS_SERVER extends Service {
 
     private final int ScanSpan = 1000 * 10;
     private final IBinder binder = new MyBinder();
-    DBManager dbManager = null;
+//    DBManager dbManager = null;
     private String username = "", deviceid;
 
     private GPS_SERVER gps_server;
@@ -80,8 +80,8 @@ public class GPS_SERVER extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (dbManager != null)
-            dbManager.closeDB();
+//        if (dbManager != null)
+//            dbManager.closeDB();
         client.unRegisterLocationListener(listener);
         client.stop();
 //        gpsclass.closegpslistener();
@@ -99,11 +99,21 @@ public class GPS_SERVER extends Service {
 
         NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         Notification baseNF = new Notification();
-        baseNF.icon = R.drawable.gps;
-        baseNF.tickerText = "GPS服务启动";
-        baseNF.defaults = Notification.DEFAULT_LIGHTS;
-        baseNF.setLatestEventInfo(getApplicationContext(), "服务已经启动", "正在搜索位置", null);
-        nm.notify(0, baseNF);
+        Notification.Builder builder = new Notification.Builder(this);
+        builder.setSmallIcon(R.drawable.gps);
+        builder.setTicker("GPS服务启动");
+        builder.setDefaults(Notification.DEFAULT_LIGHTS);
+        builder.setContentTitle("服务已经启动");
+        builder.setContentText("正在搜索位置");
+
+        Notification notification=builder.build();
+        nm.notify(0, notification);
+//
+//        baseNF.icon = R.drawable.gps;
+//        baseNF.tickerText = "GPS服务启动";
+//        baseNF.defaults = Notification.DEFAULT_LIGHTS;
+//        baseNF.setLatestEventInfo(getApplicationContext(), "服务已经启动", "正在搜索位置", null);
+//        nm.notify(0, baseNF);
 
         File file = new File(Environment.getExternalStorageDirectory() + "/zhongyuan/");
         if (!file.exists())
@@ -113,8 +123,8 @@ public class GPS_SERVER extends Service {
         if (isfirst == false)
             CopyDb();
 
-        dbManager = new DBManager(this,
-                Environment.getExternalStorageDirectory() + "/zhongyuan/gpsdata.db");
+//        dbManager = new DBManager(this,
+//                Environment.getExternalStorageDirectory() + "/zhongyuan/gpsdata.db");
 
         SharedPreferences sharedPreferences = getSharedPreferences("GPS_ZY", Context.MODE_APPEND);
         username = sharedPreferences.getString("name", "");
